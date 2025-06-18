@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-color: #000000;
+  --rainbow-gradient: linear-gradient(90deg, #141414 13%, #262626 52%, #141414 100%);
+}
+
+body {
+  background: var(--background-color);
+}
+
+
+.ewGuiPicker .react-colorful {
+  height: 120px;
+  width: auto;
+  padding: 0px;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.ewGuiPicker .react-colorful__saturation-pointer {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border-width: 13px;
+  background-color: aliceblue;
+  opacity: 0.5;
+}
+.ewGuiPicker .react-colorful__saturation-pointer:hover {
+  opacity: 1;
+  cursor: grab;
+}
+
+.ewGuiPicker .react-colorful__saturation .react-colorful__interactive {
+  height: 80px;
+}
+
+.ewGuiPicker .react-colorful__hue {
+  width: auto;
+  height: 20px;
+  border-radius: 0px 0px 8px 8px;
+}
+
+.ewGuiPicker .react-colorful__hue-pointer {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border-width: 13px;
+  background-color: aliceblue;
+  opacity: 0.5;
+}
+
+
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+.gradient-background {
+  background:var(--rainbow-gradient);
+  background-size: 200% 200%; 
+  animation: gradient-animation 5.5s ease-in-out infinite alternate;
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .shadow-box {
+    box-shadow: 0px 14px 19px 0px rgba(0,0,0,0.45);
+    -webkit-box-shadow: 0px 14px 19px 0px rgba(0,0,0,0.45);
+    -moz-box-shadow: 0px 14px 19px 0px rgba(0,0,0,0.45);
+  }
+}

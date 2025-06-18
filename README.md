@@ -1,40 +1,215 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
+# Getting Started with Endless Gui
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm i endlessgui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+![EwGui Logo](https://ewgui.vercel.app/images/logo.png)
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+#### Components:
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Component | Props                  | Description | 
+| :-------- | :----------------------| :---------  |
+| `HeaderEW`  | title  | Label for the name of your project	| 
+| `LabelEW`   | title  | Label for the name of one or a group of controls |
+| `SliderEW` | title, min, max, step, value, onChange   | Classic Range input   | 
+| `ButtonEW`  | title, onClick  | Button |
+| `TogglerEW`  | title_a, title_b, onClick_a, onClick_b  | Slider between two states  | 
+| `DropdownEW`  |  items, onSelect | Drop-down list |
+| `RadioEW`  |  title_a, title_b, onClick | Radio button |
+| `UniversalUploaderEW` |  onImageLoaded, onFileLoaded, hidden, | Drag and drop field for uploading files such as jpeg, png, fbx, obj, pdf |
+| `ImageUploaderEW` |  onImageLoaded hidden,  | Drag and drop field for loading jpeg, png | 
+| `ColorPickerEW`|  WIP | Color palette can be selected by cursor or typed in  |
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Basic import:
+```jsx
+import EwGui, { ButtonEW, LabelEW, HeaderEW, SliderEW ... } from "./components/ewGui";
+```
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Simple example:
+```jsx
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+export function App(){
+
+  const [slider, setSlider] = useState(0)
+  const [urlFile, setUrlFile] = useState(null)
+
+  const itemsGui = [
+    { label: 'First', value: '1' },
+    { label: 'Second', value: '2' },
+    { label: 'Third', value: '3' },
+  ]
+  
+  const [ dropdown, setDropdown] = useState(itemsGui[0])
+  
+  const handleDropdown = (item) => {
+    setDropdown(item);
+  };
+
+  const handleButtonEvent = ()=>{
+    console.log('EwGui is work')
+  }
+
+  return(
+    <>
+      <EwGui width={'300px'}>
+        <HeaderEW title={'Test GUI'}/>
+        <SliderEW title={'SLider'} min={0} max={1} step={0.1} value={slider} onChange={setSlider} />
+        <DropdownEW items={itemsGui} onSelect={handleDropdown}/>
+        <UniversalUploaderEW onImageLoaded={setImage} onFileLoaded={setUrlFile} hidden={false}/>
+        <ButtonEW title={'Save'} onClick={handleButtonEvent}/>
+        ...
+      </EwGui>
+    </>
+  )
+}
+```
+
+# Components UI
+
+### `HeaderEW` 
+
+  ```jsx
+  <HeaderEW title={}/>
+  ```
+  ```jsx
+  /** Use props */
+  title={'Endless Work Gui'} 
+  ```
+
+### `LabelEW` 
+
+  ```jsx
+  <LabelEW title={}/>
+  ```
+  ```jsx
+  /** Use props */
+  title={'Color mode'} 
+  ```
+
+### `SliderEW` 
+
+  ```jsx
+  <SliderEW title={} min={} max={} step={} value={} onChange={} />
+  ```
+  ```jsx
+   /** Add value & event */
+  const [slider, setSlider] = useState(0)
+
+  /** Use props */
+  title={'Slider'} 
+  min={0} 
+  max={10} 
+  step={0.01} 
+  value={slider} 
+  onChange={setSlider}
+  ```
+
+### `ButtonEW` 
+  ```jsx
+   <ButtonEW title={'Hello'} onCLick={()=>alert('Hello world')} width={'100%'}/>
+  ```
+
+  ```jsx
+  /** Use props */
+  title={'Button'} 
+  onCLick={()=>{}} 
+  width={'100%'}
+  ```
+### `TogglerEW` 
+
+  ```jsx
+   <TogglerEW title_a={} title_b={} onClicke_a={} onClicke_b={}/>
+  ```
+
+  ```jsx
+  /** Use props */
+  title_a={'On'}  /** first state */
+  title_b={'Off'}  /** second state */
+  onClicke_a={()=>{}}  /** first event */
+  onClicke_b={()=>{}} /** second event */
+  ```
+
+### `DropdownEW` 
+  ```jsx
+   <DropdownEW items={} onSelect={}/>
+  ```
+
+  ```jsx
+  /** Add value, array & event */
+  const itemsGui = [
+    { label: 'First', value: '1' },
+    { label: 'Second', value: '2' },
+    { label: 'Third', value: '3' },
+  ]
+  const [ dropdown, setDropdown] = useState(itemsGui[0])
+  
+  /** The first one in the list will be displayed first */
+  const handleDropdown = (item) => {
+    setDropdown(item);
+  };
+
+  /** Use props */
+  items={itemsGui} 
+  onSelect={handleDropdown}
+  ```
+
+
+### `RadioEW` 
+  ```jsx
+  <RadioEW title_a={} title_b={} onCLick={}/>
+  ```
+
+  ```jsx
+  /** Use props */
+  title_a={'On'}  /** first state */
+  title_b={'Off'}  /** second state */
+  onClicke_a={()=>{}}  /** first event */
+  ```
+
+### `UniversalUploaderEW` 
+
+  ```jsx
+  <UniversalUploaderEW onImageLoaded={} onFileLoaded={} hidden={}/>
+  ```
+
+  ```jsx
+   /** Add value & event */
+  const [image, setImage] = useState(null)
+  const [urlFile, setUrlFile] = useState(null)
+
+  /** Use props */
+  onImageLoaded={setImage} 
+  onFileLoaded={setUrlFile} 
+  hidden={false} /** if false drag & drop field hide */
+  ```
+
+### `ImageUploaderEW` 
+
+  ```jsx
+  <ImageUploaderEW onImageLoaded={} hidden={}/>
+  ```
+
+  ```jsx
+   /** Add value & event */
+  const [image, setImage] = useState(null)
+
+  /** Use props */
+  onImageLoaded={setImage} 
+  hidden={false} /** if false drag & drop field hide */
+  ```
+
+
+### `ColorPickerEW`
+
+ `work in progress`
+
+
+
+
+
